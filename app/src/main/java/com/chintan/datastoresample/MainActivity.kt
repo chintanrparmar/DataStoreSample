@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    private val scope = MainScope()
+    private val scope = MainScope() // Coroutines Scope for executing suspend function
 
     private lateinit var binding: ActivityMainBinding
 
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         // with Preferences DataStore
         dataStore = createDataStore(
-            name = "settings"
+            name = "userPref"
         )
 
         binding.writeBtn.setOnClickListener {
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun readUserData(): Flow<UserData> = dataStore.data
         .map { currentPreferences ->
-            // Unlike Proto DataStore, there's no type safety here.
+            // Lets fetch the data from our DataStore by using the same key which we used earlier for storing the data.
             val name = currentPreferences[NAME_KEY] ?: ""
             val age = currentPreferences[AGE_KEY] ?: 0
             UserData(name, age)
@@ -73,8 +73,8 @@ class MainActivity : AppCompatActivity() {
 
     private suspend fun saveUserDetails(userData: UserData) {
         dataStore.edit { userDetails ->
-            // We can safely increment our counter without losing data due to races!
-            userDetails[NAME_KEY] = userData.name
+            // Lets save out data to DataStore!
+            userDetails[NAME_KEY] = userData.name //Key = Value
             userDetails[AGE_KEY] = userData.age
         }
     }
