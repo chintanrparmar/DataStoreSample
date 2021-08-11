@@ -2,10 +2,10 @@ package com.chintan.datastoresample
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.DataStore
-import androidx.datastore.preferences.Preferences
-import androidx.datastore.preferences.createDataStore
-import androidx.datastore.preferences.edit
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.preferencesDataStore
 import com.chintan.datastoresample.databinding.ActivityMainBinding
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences> by preferencesDataStore(name = "userPref") // declaring and initializing the datastore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,10 +27,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // with Preferences DataStore
-        dataStore = createDataStore(
-            name = "userPref"
-        )
 
         binding.writeBtn.setOnClickListener {
 

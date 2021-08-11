@@ -1,7 +1,9 @@
 package com.chintan.datastoresample
 
-import androidx.datastore.preferences.preferencesKey
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+
 
 //Lets define some keys for our preference
-val NAME_KEY = preferencesKey<String>("name")
-val AGE_KEY = preferencesKey<Int>("age")
+val NAME_KEY = stringPreferencesKey("name")
+val AGE_KEY = intPreferencesKey("age")
